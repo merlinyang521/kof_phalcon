@@ -1,0 +1,14 @@
+{
+    "name": "kof/phalcon",
+    "description": "Adapters, prototypes or functionality that can be potentially incorporated to the C-framework.",
+    "type": "library",
+    "require": {
+        "php": ">=5.5",
+        "ext-phalcon": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kof\\Phalcon\\": "src/"
+        }
+    }
+}

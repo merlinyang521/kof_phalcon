@@ -1,1 +1,1 @@
-echo # kof_phalcon
+# kof_phalcon

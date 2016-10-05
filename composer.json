@@ -5,7 +5,8 @@
     "require": {
         "php": ">=5.5",
         "ext-phalcon": "^3.0",
-        "psr/cache": "^1.0"
+        "psr/cache": "^1.0",
+        "psr/log": "^1.0"
     },
     "autoload": {
         "psr-4": {

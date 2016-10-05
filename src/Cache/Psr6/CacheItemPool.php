@@ -37,10 +37,10 @@ class CacheItemPool implements CacheItemPoolInterface
         try {
             $value = $this->phalconCache->get($key);
         } catch (Exception $e) {
-            return new CacheItem($key, null, false);
+            return new CacheItem($key, null);
         }
 
-        return new CacheItem($key, $value, $value !== null);
+        return new CacheItem($key, $value);
     }
 
     /**
@@ -137,7 +137,7 @@ class CacheItemPool implements CacheItemPoolInterface
         $now = time();
         foreach ($this->deferred as $key => $item) {
             $expiration = $item->getExpiration();
-            $lifetime = $expiration - $now;
+            $lifetime = $expiration !== null ? ($expiration - $now) : null;
             try {
                 if (!$this->phalconCache->save($item->getKey(), $item->get(), $lifetime)) {
                     return false;

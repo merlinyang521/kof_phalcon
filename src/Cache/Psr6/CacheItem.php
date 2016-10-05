@@ -19,11 +19,6 @@ final class CacheItem implements CacheItemInterface
     protected $value;
 
     /**
-     * @var bool
-     */
-    protected $isHit;
-
-    /**
      * @var int|null
      */
     protected $expiration = null;
@@ -37,13 +32,11 @@ final class CacheItem implements CacheItemInterface
      * CacheItem constructor.
      * @param string $key
      * @param null|string $value
-     * @param bool $isHit
      */
-    public function __construct($key, $value = null, $isHit = false)
+    public function __construct($key, $value = null)
     {
         $this->key = $key;
         $this->value = $value;
-        $this->isHit = $isHit;
     }
 
     /**
@@ -59,10 +52,6 @@ final class CacheItem implements CacheItemInterface
      */
     public function get()
     {
-        if (!$this->isHit()) {
-            return null;
-        }
-
         return $this->value;
     }
 
@@ -71,7 +60,7 @@ final class CacheItem implements CacheItemInterface
      */
     public function isHit()
     {
-        return $this->isHit;
+        return $this->value !== null;
     }
 
     /**
@@ -90,7 +79,7 @@ final class CacheItem implements CacheItemInterface
     {
         if (null === $expiration) {
             $this->expiration = $this->defaultLifetime > 0 ? time() + $this->defaultLifetime : null;
-        } elseif ($expiration instanceof \DateTimeInterface) {
+        } elseif ($expiration instanceof DateTimeInterface) {
             $this->expiration = (int) $expiration->format('U');
         } else {
             throw new InvalidArgumentException(
@@ -111,8 +100,8 @@ final class CacheItem implements CacheItemInterface
     {
         if (null === $time) {
             $this->expiration = $this->defaultLifetime > 0 ? time() + $this->defaultLifetime : null;
-        } elseif ($time instanceof \DateInterval) {
-            $this->expiration = (int) \DateTime::createFromFormat('U', time())->add($time)->format('U');
+        } elseif ($time instanceof DateInterval) {
+            $this->expiration = (int) DateTime::createFromFormat('U', time())->add($time)->format('U');
         } elseif (is_int($time)) {
             $this->expiration = $time + time();
         } else {

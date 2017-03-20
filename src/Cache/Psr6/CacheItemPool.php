@@ -139,14 +139,9 @@ class CacheItemPool implements CacheItemPoolInterface
             $expiration = $item->getExpiration();
             $lifetime = $expiration !== null ? ($expiration - $now) : null;
             try {
-                if (!$this->phalconCache->save($item->getKey(), $item->get(), $lifetime)) {
-                    return false;
-                }
-            } catch (Exception $e) {
-                return false;
-            }
-
-            unset($this->deferred[$key]);
+                $this->phalconCache->save($item->getKey(), $item->get(), $lifetime);
+                unset($this->deferred[$key]);
+            } catch (Exception $e) {}
         }
 
         return true;

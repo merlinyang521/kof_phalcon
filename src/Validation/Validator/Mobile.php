@@ -19,7 +19,7 @@ class Mobile extends Validator implements ValidatorInterface
     {
         $mobile = $validator->getValue($field);
 
-        if (empty($mobile) || !preg_match('/^(13|14|15|17|18)[0-9]{9}$/', $mobile)) {
+        if (empty($mobile) || !preg_match('/^(13|14|15|16|17|18|19)[0-9]{9}$/', $mobile)) {
             $message = $this->getOption('message');
             if (is_array($message)) {
                 $message = $message[$field];
